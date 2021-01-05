@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Transfer Rows Between Two HTML Table</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       
+        <style>
+           
+            .container{overflow: hidden}
+            .tab{float: left}
+            .tab-btn{margin: 50px;}
+            button{display:block;margin-bottom: 20px;}
+            tr{transition:all .25s ease-in-out}
+            tr:hover{background-color: #ddd;}
+           
+        </style>    
+    </head>
+    <body>
+    <label for="payer"><B>Payer Name :<B></label>
+    <input type="text" name="search" id="search" placeholder="Search..." />
+       
+        <div class="container">
+           
+            <div class="tab">
+                <table id="table1" border="1">
+                <thead>
+                    <tr>
+                        <th>Payer Name</th>
+                        <th>Payer Address</th>
+                        <th>Due Date</th>
+                        <th>Account No</th>
+                        <th>Amount</th>
+                        <th>Select</th>
+                    </tr>
+                    <thead>
+                    <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>12th Main</td>
+                        <td>12/10/12</td>
+                        <td>20110425</td>
+                        <td>$320,800</td>
+                        <td><input type="checkbox" name="check-tab1"></td>
+                    </tr>
+                     <tr>
+                         <td>Billl Doe</td>
+                        <td>11th Main</td>
+                        <td>10/12/10</td>
+                        <td>20110426</td>
+                        <td>$300,800</td>
+                        <td><input type="checkbox" name="check-tab1"></td>
+                    </tr>
+                    <tr>
+                         <td>Billl Doe</td>
+                        <td>19th Main</td>
+                        <td>26/04/16</td>
+                        <td>20110428</td>
+                        <td>$200,800</td>
+                        <td><input type="checkbox" name="check-tab1"></td>
+                    </tr>
+                     <tr>
+                         <td>Sally O'Doe</td>
+                       <td>6th Main</td>
+                        <td>16/01/16</td>
+                        <td>20110429</td>
+                        <td>$100,800</td>
+                        <td><input type="checkbox" name="check-tab1"></td>
+                    </tr>
+                     <tr>
+                        <td>Sam Doer</td>
+                <td>19th Main</td>
+                <td>01/08/16</td>
+                        <td>20110429</td>
+                        <td>$600,800</td>
+                        <td><input type="checkbox" name="check-tab1"></td>
+                    </tr>
+                   </tbody>
+                </table>
+            </div>
+        
+           <div id="view1" class="tab tab-btn">
+                <button onclick="tab1_To_tab2();">Add to Cart</button>
+                <button onclick="bbbb();"> View Cart :</button>
+                
+            </div>
+            </div>
+         
+            <div id="showtable2">
+           <h3>View Cart :</h3>
+            
+            <div class="tab">
+                <table id="table2" border="1">
+                    <tr>
+                        <th>Payer Name</th>
+                        <th>Payer Address</th>
+                        <th>Due Date</th>
+                        <th>Account No</th>
+                        <th>Amount</th>
+                        <th>Select</th>
+                    </tr>
+                </table>  
+            </div>
+            </div>
+             <div id="view2" class="tab tab-btn">
+                
+                <button onclick="tab2_To_tab1();">Remove From Cart</button>
+            </div>
+
+            <div id="view3" class="tab tab-btn">
+                
+              <button onclick="success();">Make Payment</button>
+          </div>
+
+
+        </div>
+        
+       
+        <script>
+        
+  
+        
+           
+            function tab1_To_tab2()
+            {
+                var table1 = document.getElementById("table1"),
+                    table2 = document.getElementById("table2"),
+                    checkboxes = document.getElementsByName("check-tab1");
+            console.log("Val1 = " + checkboxes.length);
+                 for(var i = 0; i < checkboxes.length; i++)
+                     if(checkboxes[i].checked)
+                        {
+                            // create new row and cells
+                            var newRow = table2.insertRow(table2.length),
+                                cell1 = newRow.insertCell(0),
+                                cell2 = newRow.insertCell(1),
+                                cell3 = newRow.insertCell(2),
+                                cell4 = newRow.insertCell(3);
+                            cell5 = newRow.insertCell(4);
+                            cell6 = newRow.insertCell(5);
+                            // add values to the cells
+                            cell1.innerHTML = table1.rows[i+1].cells[0].innerHTML;
+                            cell2.innerHTML = table1.rows[i+1].cells[1].innerHTML;
+                            cell3.innerHTML = table1.rows[i+1].cells[2].innerHTML;
+                            cell4.innerHTML = table1.rows[i+1].cells[3].innerHTML;
+                            cell5.innerHTML = table1.rows[i+1].cells[4].innerHTML;
+                            cell6.innerHTML = "<input type='checkbox' name='check-tab2'>";
+                           
+                            // remove the transfered rows from the first table [table1]
+                            var index = table1.rows[i+1].rowIndex;
+                            table1.deleteRow(index);
+                            // we have deleted some rows so the checkboxes.length have changed
+                            // so we have to decrement the value of i
+                            i--;
+                           console.log(checkboxes.length);
+                        }
+            }
+           
+           
+            function tab2_To_tab1()
+            {
+                var table1 = document.getElementById("table1"),
+                    table2 = document.getElementById("table2"),
+                    checkboxes = document.getElementsByName("check-tab2");
+            console.log("Val1 = " + checkboxes.length);
+                 for(var i = 0; i < checkboxes.length; i++)
+                     if(checkboxes[i].checked)
+                        {
+                            // create new row and cells
+                            var newRow = table1.insertRow(table1.length),
+                                cell1 = newRow.insertCell(0),
+                                cell2 = newRow.insertCell(1),
+                                cell3 = newRow.insertCell(2),
+                                cell4 = newRow.insertCell(3);
+                            cell5 = newRow.insertCell(4);
+                            cell6 = newRow.insertCell(5);
+                            // add values to the cells
+                            cell1.innerHTML = table2.rows[i+1].cells[0].innerHTML;
+                            cell2.innerHTML = table2.rows[i+1].cells[1].innerHTML;
+                            cell3.innerHTML = table2.rows[i+1].cells[2].innerHTML;
+                            cell4.innerHTML = table1.rows[i+1].cells[3].innerHTML;
+                            cell5.innerHTML = table1.rows[i+1].cells[4].innerHTML;
+                            cell6.innerHTML = "<input type='checkbox' name='check-tab1'>";
+                           
+                            // remove the transfered rows from the second table [table2]
+                            var index = table2.rows[i+1].rowIndex;
+                            table2.deleteRow(index);
+                            // we have deleted some rows so the checkboxes.length have changed
+                            // so we have to decrement the value of i
+                            i--;
+                           console.log(checkboxes.length);
+                        }
+            }
+           
+        </script>  
+        <script>
+      const searchInput = document.getElementById("search");
+      const rows = document.querySelectorAll("tbody tr");
+      console.log(rows);
+      searchInput.addEventListener("keyup", function (event) {
+        const q = event.target.value.toLowerCase();
+        rows.forEach((row) => {
+          row.querySelector("td").textContent.toLowerCase().startsWith(q)
+            ? (row.style.display = "table-row")
+            : (row.style.display = "none");
+        });
+      });
+    </script>
+    <script>
+ 
+    $(document).ready(function(){
+   	 $('#showtable2').hide();
+   	 $('#view2').hide();
+   	 $('#view3').hide();
+  
+    
+   }); 
+    
+    </script> 
+    <script>
+    function bbbb(){
+   		$("#showtable2").show();
+   		$("#view2").show();
+       $('#view3').show();
+   	 }
+
+function success(){
+  alert('Payment Successful')
+}
+
+    </script>
+     
+       
+    </body>
+</html>
+
